@@ -1,0 +1,98 @@
+%%  -*-  coding:utf-8  -*-
+\documentclass[12pt]{jsarticle}
+
+\input{Preambles}
+
+\def\arithmean#1{\bar{#1}}
+\def\arithsum#1{#1}
+\def\harmmean#1{\hat{#1}}
+\def\harmformula#1#2#3{\frac{#1}{\frac{1}{#2} + \frac{1}{#3}}}
+
+\title{調和平均}
+
+\begin{document}
+
+\maketitle
+
+\section{調和平均の性質}
+
+\begin{definition}[調和平均]
+正の実数 $x_1, x_2, \ldots, x_n$,
+($x_i \in \mathbb{R}, x_i > 0$) について
+\begin{equation}
+H = \frac{n}{\frac{1}{x_1} + \frac{1}{x_2} + \cdots \frac{1}{x_n}}
+= \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}
+\end{equation}
+を調和平均 (harmonic mean) と呼ぶ。
+\end{definition}
+
+\begin{definition}[相加平均]
+正の実数 $x_1, x_2, \ldots, x_n$,
+($x_i \in \mathbb{R}, x_i > 0$) について
+\begin{equation}
+A = \frac{x_1 + x_2 + \cdots x_n}{n}
+= \frac{\sum_{i=1}^{n} x_i}{n}
+\end{equation}
+を相加平均 (または算術平均, arithmetic mean) と呼ぶ。
+\end{definition}
+
+\begin{definition}[相乗平均]
+正の実数 $x_1, x_2, \ldots, x_n$,
+($x_i \in \mathbb{R}, x_i > 0$) について
+\begin{equation}
+G = {}^{n} \sqrt{x_1 x_2 \cdots x_n}
+\end{equation}
+を相乗平均 (または幾何平均, geomtric mean) と呼ぶ。
+\end{definition}
+
+\begin{theorem}[平均の不等式]
+\begin{equation}
+H \le G \le A
+\end{equation}
+が成り立つ。
+\end{theorem}
+
+\begin{definition}[記号]
+$n$ 個の正の実数の組
+\begin{align}
+(a_i, b_i), && a_i \in \mathbb{R}, b_i \in \mathbb{R},
+a_i > 0, b_i >0 \qquad i = 1, 2, \ldots n
+\end{align}
+に対して、
+\begin{align}
+h_i = & \harmformula{2}{a_i}{b_i},
+& {h_i}' = & \harmformula{1}{a_i}{b_i}
+\end{align}
+とおく。さらに、
+\begin{align}
+\arithsum{A} = & \sum_{i=1}^{n} a_i,
+& \arithmean{a} = &
+\frac{1}{n} \sum_{i=1}^{n} a_i
+= \frac{1}{n} A, \\
+\arithsum{B} = & \sum_{i=1}^{n} b_i,
+& \arithmean{b} = &
+\frac{1}{n} \sum_{i=1}^{n} b_i
+= \frac{1}{n} B, \\
+\arithsum{H} = & \sum_{i=1}^{n} {h_i}',
+& \arithmean{h} = &
+\frac{1}{n} \sum_{i=1}^{n} h_i
+= \frac{2}{n} H, \\
+\harmmean{H} = & \harmformula{1}{A}{B},
+& \harmmean{h} = & \harmformula{2}{\arithmean{a}}{\arithmean{b}}
+\end{align}
+と記号を定義する。
+\end{definition}
+
+\begin{theorem}
+調和平均と相加平均に関して、
+\begin{equation}
+\arithmean{h} \le \harmmean{h}
+\end{equation}
+が成り立つ。i.e.,
+ペア毎に調和平均をとってから相加平均を取ったものは、
+先に $a$ 列 $b$ 列で相加平均を取ってから調和平均を取ったものより
+大きくはない。
+\end{theorem}
+
+
+\end{document}
