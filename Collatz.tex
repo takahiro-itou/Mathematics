@@ -1,0 +1,40 @@
+%%  -*-  coding:utf-8  -*-
+
+%%
+%%
+%%
+\section{コラッツ=角谷 予想}
+
+\begin{definition}
+$\forall m \in \mathbb{N}$ に対して、
+関数 $f(m)$ を
+\begin{equation}
+f(m) =
+\begin{cases}
+m / 2  & \text{if} \quad (m \equiv 0) \mod 2 \\
+3m + 1 & \text{if} \quad (m \equiv 1) \mod 2
+\end{cases}
+\end{equation}
+とする。
+さらに、数列 $a_n$ を
+\begin{eqnarray}
+a_0 &=& m \\
+a_i &=& f(a_{i-1}) \quad \text{for~} i \ge 1
+\end{eqnarray}
+で定義する。
+\end{definition}
+
+\begin{example}
+$m=12$ の時、
+\begin{align}
+a_0 = 12, && a_1 = 6, && a_2 = 3, && a_3 = 10, && a_4 = 5, \nonumber \\
+a_5 = 16, && a_6 = 8, && a_7 = 4, && a_8 = 2,  && a_9 = 1, \nonumber \\
+a_{10} = 4, && a_{11} = 2, && a_{12} = 1, && \ldots
+\end{align}
+となる。
+\end{example}
+
+\begin{problem}
+どんな初期値 $m \in \mathbb{N}$ から始めても
+数列 $a_n$ は必ず $1$ を含むか？
+\end{problem}

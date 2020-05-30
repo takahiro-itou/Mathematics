@@ -1,5 +1,8 @@
 
 .hg/
+*.aux
+*.dvi
+*.log
 
 .Work/
 

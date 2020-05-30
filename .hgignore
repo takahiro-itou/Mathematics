@@ -1,6 +1,9 @@
 
 syntax: glob
 .Work/
+*.aux
+*.dvi
+*.log
 
 syntax: regexp
 ^\.git/
