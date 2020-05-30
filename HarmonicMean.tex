@@ -40,7 +40,7 @@ A = \frac{x_1 + x_2 + \cdots x_n}{n}
 正の実数 $x_1, x_2, \ldots, x_n$,
 ($x_i \in \mathbb{R}, x_i > 0$) について
 \begin{equation}
-G = {}^{n} \sqrt{x_1 x_2 \cdots x_n}
+G = \sqrt[n]{x_1 x_2 \cdots x_n}
 \end{equation}
 を相乗平均 (または幾何平均, geomtric mean) と呼ぶ。
 \end{definition}
@@ -167,7 +167,7 @@ $\arithsum{H_2} \le \harmmean{H}_{2}$
 すると $n = k$ の時は、
 \begin{eqnarray}
 \harmmean{H}_{k} &=& \harmformula{1}{A_k}{B_k} \\
-&=& \harmformula{1}{A_{k-1} + a_k}{B_{k-1} + b_k} \\
+&=& \harmformula{1}{A_{k-1} + a_k}{B_{k-1} + b_k}
 \end{eqnarray}
 この式に、
 $x = A_{k-1}, y = a_k, s = B_{k-1}, t = b_k$ として
@@ -201,5 +201,28 @@ $\arithsum{H}_{k} \le \harmmean{H}_{k}$
 大きくはない。
 \end{corollary}
 
+\begin{proof}
+\begin{eqnarray}
+\arithmean{h} =
+\frac{1}{n} \sum_{i=1}^{n} h_i
+= \frac{2}{n} \sum_{i=1}^{n} {h_i}'
+= \frac{2}{n} \arithsum{H}_{n}
+\end{eqnarray}
+である。一方
+\begin{eqnarray}
+\harmmean{h} &=&
+\harmformula{2}{\arithmean{a}}{\arithmean{b}} \\
+&=& \frac{2}{n} \frac{1}{\frac{1}{n} \left(
+\frac{1}{A_n / n} + \frac{1}{B_n / n} \right) } \\
+&=& \frac{2}{n} \harmformula{1}{A_n}{B_n} = \frac{2}{n} \harmmean{H}_{n}
+\end{eqnarray}
+よって、定理より明らかに
+\begin{equation}
+\frac{2}{n} \arithsum{H}_{n} \le \frac{2}{n} \harmmean{H}_{n}
+\qquad \text{i.e.,} \qquad
+\arithmean{h} \le \harmmean{h}
+\end{equation}
+が成り立つ。
+\end{proof}
 
 \end{document}
