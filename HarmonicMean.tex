@@ -86,13 +86,55 @@ h_i = & \harmformula{2}{a_i}{b_i},
 \begin{lemma}
 $\forall x, y, s, t > 0 (\in \mathbb{R})$ に対して
 \begin{equation}
-\harmformula{1}{x}{y} + \harmformula{1}{s}{t}
-\le \harmformula{1}{x + s}{y + t}
+\harmformula{1}{x}{s} + \harmformula{1}{y}{t}
+\le \harmformula{1}{x + y}{s + t}
 \end{equation}
 が成り立つ。
 \end{lemma}
 
-\begin{theorem}
+\begin{proof}
+\begin{eqnarray}
+&& (R.H.S) - (L.H.S) \nonumber \\
+&=& \harmformula{1}{x + y}{s + t} -
+\left( \harmformula{1}{x}{s} + \harmformula{1}{y}{t} \right) \\
+&=& \frac{(x + y)(s + t)}{(x + y) + (s + t)}
+- \left( \frac{x s}{x + s} + \frac{y t}{y + t} \right) \\
+&=& \frac{(x + y)(s + t)}{(x + y + s + t)}
+- \frac{x s (y + t) + y t (x + s)}{(x + s)(y + t)} \\
+&=& \frac{(x+y)(s+t)(x+s)(y+t) - (x+y+s+t)
+\left\{ xs(y+t) + yt(x+s) \right\} }
+{ (x + y + s + t)(x + s)(y + t) }
+\end{eqnarray}
+である。分母は明らかに正だから、この分子を計算すると
+\begin{eqnarray}
+&& (x+y)(s+t)(x+s)(y+t) - (x+y+s+t)\left\{ xs(y+t) + yt(x+s) \right\}
+\nonumber \\
+&=& (xs + xt + ys + yt)(x + s)(y + t) \nonumber \\
+&& - ((x + s) + (y + t)) \left\{ xs(y + t) + yt(x + s) \right\} \\
+&=& xs(x + s)(y + t) + yt(x + s)(y + t) \nonumber \\
+&& + xt(x + s)(y + t) + ys(x + s)(y +t) \nonumber \\
+&& - (x + s)xs(y + t) - (y + t)yt(x + s) \nonumber \\
+&& - (y + t)xs(y + t) - (x + s)yt(x + s) \\
+&=& x t (x + s)(y + t) + y s (x + s)(y + t) - xs(y+t)^2 - yt(x+s)^2 \\
+&=& xt(xy + xt + sy + st) + ys(xy + xt + sy + st) \nonumber \\
+&& - xs(y^2 + 2yt + t^2) - yt(x^2 + 2xs +s^2) \\
+&=& \underline{x^2yt}_{*1} + x^2t^2 + xyst + \underline{xst^2}_{*2}
++ \underline{xy^2s}_{*3} + xyst + y^2s^2 + \underline{ys^2t}_{*4} \nonumber \\
+&& - \underline{xy^2s}_{*3} - 2xyst - \underline{xst^2}_{*2}
+- \underline{x^2yt}_{*1} - 2xyst - \underline{ys^2t}_{*4} \\
+&=& x^2t^2 - 2 xyst + y^2s^2 \\
+&=& (xt - ys)^2
+\end{eqnarray}
+よって、
+\begin{eqnarray}
+&& (R.H.S) - (L.H.S) \nonumber \\
+&=& \frac{(xt - ys)^2}{ (x + y + s + t)(x + s)(y +t) } \\
+&\ge& 0
+\end{eqnarray}
+が示された。
+\end{proof}
+
+\begin{corollary}
 調和平均と相加平均に関して、
 \begin{equation}
 \arithmean{h} \le \harmmean{h}
@@ -101,7 +143,7 @@ $\forall x, y, s, t > 0 (\in \mathbb{R})$ に対して
 ペア毎に調和平均をとってから相加平均を取ったものは、
 先に $a$ 列 $b$ 列で相加平均を取ってから調和平均を取ったものより
 大きくはない。
-\end{theorem}
+\end{corollary}
 
 
 \end{document}
