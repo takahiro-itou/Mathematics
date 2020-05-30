@@ -65,25 +65,25 @@ h_i = & \harmformula{2}{a_i}{b_i},
 \end{align}
 とおく。さらに、
 \begin{align}
-\arithsum{A} = & \sum_{i=1}^{n} a_i,
+\arithsum{A_n} = & \sum_{i=1}^{n} a_i,
 & \arithmean{a} = &
 \frac{1}{n} \sum_{i=1}^{n} a_i
-= \frac{1}{n} A, \\
-\arithsum{B} = & \sum_{i=1}^{n} b_i,
+= \frac{1}{n} A_n, \\
+\arithsum{B_n} = & \sum_{i=1}^{n} b_i,
 & \arithmean{b} = &
 \frac{1}{n} \sum_{i=1}^{n} b_i
-= \frac{1}{n} B, \\
-\arithsum{H} = & \sum_{i=1}^{n} {h_i}',
+= \frac{1}{n} B_n, \\
+\arithsum{H_n} = & \sum_{i=1}^{n} {h_i}',
 & \arithmean{h} = &
 \frac{1}{n} \sum_{i=1}^{n} h_i
-= \frac{2}{n} H, \\
-\harmmean{H} = & \harmformula{1}{A}{B},
+= \frac{2}{n} H_n, \\
+\harmmean{H}_{n} = & \harmformula{1}{A_n}{B_n},
 & \harmmean{h} = & \harmformula{2}{\arithmean{a}}{\arithmean{b}}
 \end{align}
 と記号を定義する。
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}\label{lem:harmonic}
 $\forall x, y, s, t > 0 (\in \mathbb{R})$ に対して
 \begin{equation}
 \harmformula{1}{x}{s} + \harmformula{1}{y}{t}
@@ -136,11 +136,59 @@ $\forall x, y, s, t > 0 (\in \mathbb{R})$ に対して
 
 \begin{theorem}
 \begin{equation}
-\arithsum{H} \le \harmmean{H}
+\arithsum{H_n} \le \harmmean{H}_{n}
 \end{equation}
 が成り立つ。
 \end{theorem}
 
+\begin{proof}
+$n$ に関する数学的帰納法で示す。
+$n=1$ の時は、
+\begin{equation}
+\arithsum{H}_{1} = \harmformula{1}{a_1}{b_1}, \quad
+\harmmean{H}_{1} = \harmformula{1}{a_1}{b_1}
+\end{equation}
+であるから、明らかに、
+$\arithsum{H}_{1} \le \harmmean{H}_{1}$
+が成り立つ。
+$n = 2$ の時は、
+\begin{equation}
+\arithsum{H}_{2} = \harmformula{1}{a_1}{b_1} + \harmformula{1}{a_2}{b_2},
+\quad
+\harmmean{H}_{2} = \harmformula{1}{a_1 + a_2}{b_1 + b_2}
+\end{equation}
+であるから、
+$x = a_1, y = a_2, s = b_1, t = b_2$ と置けば、
+これは、Lemma \ref{lem:harmonic} のクレームそのもので、
+$\arithsum{H_2} \le \harmmean{H}_{2}$
+が成り立つ。
+
+さて $n = k - 1$ の時に成り立つと仮定する。
+すると $n = k$ の時は、
+\begin{eqnarray}
+\harmmean{H}_{k} &=& \harmformula{1}{A_k}{B_k} \\
+&=& \harmformula{1}{A_{k-1} + a_k}{B_{k-1} + b_k} \\
+\end{eqnarray}
+この式に、
+$x = A_{k-1}, y = a_k, s = B_{k-1}, t = b_k$ として
+再び (補題 \ref{lem:harmonic}) を適用すれば、
+\begin{eqnarray}
+\harmmean{H}_{k}
+&=& \harmformula{1}{A_{k-1} + a_k}{B_{k-1} + b_k} \nonumber \\
+&\ge& \harmformula{1}{A_{k-1}}{B_{k-1}} + \harmformula{1}{a_k}{b_k} \\
+&=& \harmmean{H}_{k-1} + \harmformula{1}{a_k}{b_k}
+\label{eq:induction_hypotheis} \\
+&\ge& \arithsum{H}_{k-1} + \harmformula{1}{a_k}{b_k}
+\label{eq:induction_consequent} \\
+&=& \sum_{i=1}^{k-1} {h_i}' + {h_k}'
+= \sum_{i=1}^{k} {h_i} = \arithsum{H}_{k}
+\end{eqnarray}
+ここで、式 (\ref{eq:induction_hypotheis}) から
+式 (\ref{eq:induction_consequent}) への変形で、帰納法の仮定を適用した。
+これで、$n = k$ の時も
+$\arithsum{H}_{k} \le \harmmean{H}_{k}$
+が成立することが示された。
+\end{proof}
 
 \begin{corollary}
 調和平均と相加平均に関して、
