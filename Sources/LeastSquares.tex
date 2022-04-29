@@ -1,0 +1,153 @@
+%%  -*-  coding:utf-8  -*-
+\documentclass[12pt]{jsarticle}
+
+\input{Preambles}
+
+\def\error{\varepsilon}
+\def\sumdata{\sum_{i=1}^{N}}
+
+\title{最小二乗法}
+
+\begin{document}
+
+\maketitle
+
+\section{概要}
+ある観測データの組 $(x, y)$ は、モデル関数 $\function{f}{x}$ と
+誤差 $\varepsilon$ の和で
+\begin{equation}
+  y = \function{f}{x} + \error
+\end{equation}
+と表せるとする。
+
+$N$ 組の観測データ $(x_i, y_i)$ が与えられたとき、
+各 $x_i$ についてモデルから得られる予測値
+$\function{f}{x_i}$ と、実際の測定値 $y_i$ の誤差 $\error_i$ つまり
+\begin{equation}
+  \error_i := \left| \function{f}{x_i} - y_i \right|
+\end{equation}
+の和を最小にすることを考えたい。
+しかし、絶対値があると後々の計算が大変なので、
+実際には、誤差の二乗和
+
+\begin{equation}
+  \Delta := \frac{1}{2} \sumdata \error_i^2 = \frac{1}{2} \sumdata
+  \left( \function{f}{x_i} - y_i \right)^2 \label{eq:least_square}
+\end{equation}
+
+を最小にするようなモデル $\function{f}{x}$ を求める。
+なお、係数 $\frac{1}{2}$ は、後の計算の時に、
+多少計算が楽になるのを見越して付けているだけで、本質ではない。
+
+以下のセクションでは、簡単なものから複雑なものまで、
+具体的に求めてみる。
+
+\section{線形回帰 (直線) の場合}
+
+モデル関数は
+\begin{equation}
+  f \left( x \right) = a x + b
+\end{equation}
+であるから、式 (\ref{eq:least_square}) は
+\begin{equation}
+  \Delta = \frac{1}{2} \sumdata \error_i = \frac{1}{2}
+  \sumdata \left( a x_i + b - y_i \right) ^2
+\end{equation}
+となる。これを最小化する $a, b$ を求めればよい。
+これを $a, b$ に関する二次関数と見れば、この関数が最小値を取る点では
+$a$ および $b$ についての偏微分がゼロであるから、
+
+\begin{eqnarray*}
+  \partd{}{a} \Delta &=& 0, \\
+  \partd{}{b} \Delta &=& 0
+\end{eqnarray*}
+を連立して解けばよい。実際に計算してみると
+
+\begin{eqnarray*}
+  \partd{}{a} \Delta = \sumdata \left(
+  a x_i + b - y_i \right) x_i
+  = a \sumdata x_i^2 +b \sumdata x_i - \sumdata x_i y_i
+  &=& 0, \\
+  \partd{}{b} \Delta = \sumdata \left(
+  a x_i + b - y_i \right) 1
+  = a \sumdata x_i + b \sumdata 1 - \sumdata y_i, &=& 0,
+\end{eqnarray*}
+
+すなわち
+
+\begin{equation}
+  \left\{
+  \begin{array}{ll}
+    \left( \sumdata x_i^2 \right) a + \left( \sumdata x_i \right) b
+    &= \sumdata x_i y_i, \\
+    \left( \sumdata x_i \right) a + \left( \sumdata 1 \right) b
+    &= \sumdata y_i,
+  \end{array}
+  \right.
+\end{equation}
+
+を解けばよい。行列を使って書けば
+
+\begin{equation}
+  \begin{bmatrix}
+    \sumdata x_i^2, \sumdata x_i \\
+    \sumdata x_i, \sumdata 1
+  \end{bmatrix}
+  \begin{bmatrix}
+    a \\
+    b
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \sumdata x_i y_i \\
+    \sumdata y_i
+  \end{bmatrix}
+\end{equation}
+
+よって、
+\begin{equation}
+  Det := \left( \sumdata x_i^2 \right) \left( \sumdata 1 \right)
+  - \left( \sumdata x_i \right)^2
+\end{equation}
+とおけば、
+
+\begin{eqnarray}
+  \begin{bmatrix}
+    a \\
+    b
+  \end{bmatrix}
+  &=&
+  \begin{bmatrix}
+    \sumdata x_i^2, \sumdata x_i \\
+    \sumdata x_i, \sumdata 1
+  \end{bmatrix} ^{-1}
+  \begin{bmatrix}
+    \sumdata x_i y_i \\
+    \sumdata y_i
+  \end{bmatrix} \nonumber \\
+  &=&
+  \frac{1}{Det}
+  \begin{bmatrix}
+    \sumdata 1, - \sumdata x_i, \\
+    - \sumdata x_i, \sumdata x_i^2
+  \end{bmatrix}
+  \begin{bmatrix}
+    \sumdata x_i y_i \\
+    \sumdata y_i
+  \end{bmatrix}
+\end{eqnarray}
+
+さらに $\sumdata 1 = N$ であるから、最終的に
+
+\begin{eqnarray}
+  a &=& \frac{N \sumdata x_i y_i -
+    \left( \sumdata x_i \right) \left( \sumdata y_i \right)
+  }{N \sumdata x_i^2 - \left( \sumdata x_i \right)^2}, \nonumber \\
+  b &=& \frac{
+    \left( \sumdata x_i^2 \right) \left( \sumdata y_i \right)
+    -
+    \left( \sumdata x_i y_i \right) \left( \sumdata x_i \right)
+  }{N \sumdata x_i^2 - \left( \sumdata x_i \right)^2}, \nonumber \\
+\end{eqnarray}
+
+\end{document}
