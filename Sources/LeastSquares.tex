@@ -11,6 +11,7 @@
 \begin{document}
 
 \maketitle
+\tableofcontents
 
 \section{概要}
 ある観測データの組 $(x, y)$ は、モデル関数 $\function{f}{x}$ と
@@ -207,5 +208,245 @@ $a$ および $b$ についての偏微分がゼロであるから、
 
 後はこれに掃き出し法や LR 分解など、
 連立一次方程式の解法アルゴリズムを適用すれば良い。
+
+\section{発展編}
+
+\subsection{円の場合}
+
+円の場合は $y = \function{f}{x}$ の形で
+書けない (書けなくはないが面倒) ので工夫が必要である。
+中心 $(a, b)$ 半径 $r$ の円の場合 $(x, y)$ は
+\begin{equation}
+  (x - a)^2 + (y - b)^2 = r^2
+\end{equation}
+を満たす。
+
+今までの方法では$y = \function{f}{x}$ という形式だったが、
+これを変形すると 点 $(x_i, y_i)$ がこのモデル関数のグラフ上に乗っているならば、
+\begin{equation}
+  \function{f}{x_i} - y_i = 0
+\end{equation}
+を満たすべきであって、$\error_i$ は、
+この左辺の値 (と $0$ との誤差) である、
+とも言える。これと同様に考えると、
+
+\begin{equation}
+  \error_i = (x_i - a)^2 + (y - b)^2 - r^2
+\end{equation}
+で同様の手続きをすればよいが、そのままでは上の式を
+二乗したときに $a$, $b$, $r$ に関する四次式になってしまうので、
+最小値を求めることが難しい (偏微分がゼロの点が最小値とは限らない) 。
+そこで、以下のように式変形を行う。
+
+\begin{eqnarray}
+  \error_i &=& (x_i - a)^2 + (y_i - b)^2 - r^2 \nonumber \\
+  &=& x_i^2 - 2 a x_i + a^2 + y_i^2 - 2 b y_i + b^2 - r^2 \nonumber \\
+  &=& - 2 a x_i - 2 b y_i + (a^2 + b^2 - r^2) + x_i^2 + y_i^2 \nonumber \\
+  &=& A x_i + B y_i + C + x_i^2 + y_i^2
+\end{eqnarray}
+
+ただし
+\begin{eqnarray}
+  A &=& -2a, \nonumber \\
+  B &=& -2b, \nonumber \\
+  C &=& a^2 + b^2 - r^2 \label{eq:lsm_circle_assign}
+\end{eqnarray}
+
+である。すると式 (\ref{eq:least_square}) は
+
+\begin{equation}
+  \Delta := \frac{1}{2} \sumdata \error_i^2
+  = \frac{1}{2} \sumdata \left(
+  A x_i + B y_i + C + x_i^2 + y_i^2
+  \right)^2
+\end{equation}
+となって $A, B, C$ の二次式となる。
+$x_i, y_i$ は測定データで既知つまり定数であるから、
+これが四乗になっていても問題ないことに注意する。
+
+これを $A, B, C$ で偏微分すると
+
+\begin{eqnarray}
+  \partd{\Delta}{A} &=&
+  \sumdata \left(A x_i + B y_i + C + x_i^2 + y_i^2 \right)
+  x_i = 0 \nonumber \\
+  \partd{\Delta}{B} &=&
+  \sumdata \left(A x_i + B y_i + C + x_i^2 + y_i^2 \right)
+  y_i = 0 \nonumber \\
+  \partd{\Delta}{C} &=&
+  \sumdata \left(A x_i + B y_i + C + x_i^2 + y_i^2 \right)
+  1 = 0
+\end{eqnarray}
+
+従って
+
+\begin{equation}
+  \begin{bmatrix}
+    \sumdata x_i x_i, & \sumdata x_i y_i, & \sumdata x_i \\
+    \sumdata x_i y_i, & \sumdata y_i y_i, & \sumdata y_i \\
+    \sumdata x_i,     & \sumdata y_i,     & \sumdata 1
+  \end{bmatrix}
+  \begin{bmatrix}
+    A \\ B \\ C
+  \end{bmatrix}
+  = -
+  \begin{bmatrix}
+    \sumdata \left( x_i^2 + y_i^2 \right) x_i \\
+    \sumdata \left( x_i^2 + y_i^2 \right) y_i \\
+    \sumdata \left( x_i^2 + y_i^2 \right) 1
+  \end{bmatrix}
+\end{equation}
+
+後は、この連立方程式を解いて $A, B, C$ を決定し、
+式 (\ref{eq:lsm_circle_assign}) に代入して
+
+\begin{eqnarray}
+  a &=& - \frac{A}{2}, \\
+  b &=& - \frac{B}{2}, \\
+  r &=& \sqrt{a^2 + b^2 - C} = \frac{\sqrt{A^2 + B^2 - 4C}}{2}
+\end{eqnarray}
+
+が得られる。
+
+\subsection{球の場合}
+
+球の場合は、変数が増えるだけで、円の場合と全く同じである。
+
+中心 $(a, b, c)$ 半径 $r$ の球の場合、
+点 $(x_i, y_i, z_i)$ がこの球の表面上にある時
+
+\begin{equation}
+  (x_i - a)^2 + (y_i - b)^2 + (z_i - c) - r^2 = 0
+\end{equation}
+
+を満たす筈である。よって誤差 $\error_i$ は
+
+\begin{eqnarray}
+  \error_i &=& (x_i - a)^2 + (y_i - b)^2 + (z_i - c)^2 - r^2 \nonumber \\
+  &=& x_i^2 - 2 a x_i + a^2  + y_i^2 - 2 b y_i + b^2
+  + z_i^2 - 2 c z_i + c^2  - r^2 \nonumber \\
+  &=& - 2 a x_i - 2 b y_i - 2 c z_i
+  + (a^2 + b^2 + c^2 - r^2) + x_i^2 + y_i^2 +z_i^2 \nonumber \\
+  &=& A x_i + B y_i + C z_i + D + x_i^2 + y_i^2 + z_i^2
+\end{eqnarray}
+
+となる。ただし
+\begin{eqnarray}
+  A &=& -2a, \nonumber \\
+  B &=& -2b, \nonumber \\
+  C &=& -2c, \nonumber \\
+  D &=& a^2 + b^2 + c^2 - r^2 \label{eq:lsm_ball_assign}
+\end{eqnarray}
+
+である。すると式 (\ref{eq:least_square}) は
+
+\begin{equation}
+  \Delta := \frac{1}{2} \sumdata \error_i^2
+  = \frac{1}{2} \sumdata \left(
+  A x_i + B y_i + C z_i + D + x_i^2 + y_i^2 + z_i^2
+  \right)^2
+\end{equation}
+
+となって、これを $A, B, C, D$ で偏微分すると
+
+\begin{eqnarray}
+  \partd{\Delta}{A} &=&
+  \sumdata \left(A x_i + B y_i + C z_i + D + x_i^2 + y_i^2 + z_i^2 \right)
+  x_i = 0 \nonumber \\
+  \partd{\Delta}{B} &=&
+  \sumdata \left(A x_i + B y_i + C z_i + D + x_i^2 + y_i^2 + z_i^2 \right)
+  y_i = 0 \nonumber \\
+  \partd{\Delta}{C} &=&
+  \sumdata \left(A x_i + B y_i + C z_i + D + x_i^2 + y_i^2 + z_i^2 \right)
+  z_i = 0 \nonumber \\
+  \partd{\Delta}{D} &=&
+  \sumdata \left(A x_i + B y_i + C z_i + D + x_i^2 + y_i^2 + z_i^2 \right)
+  1 = 0
+\end{eqnarray}
+
+従って
+
+\begin{equation}
+  \begin{bmatrix}
+    \sumdata x_i x_i, & \sumdata y_i x_i, & \sumdata z_i x_i, & \sumdata x_i \\
+    \sumdata x_i y_i, & \sumdata y_i y_i, & \sumdata z_i y_i, & \sumdata y_i \\
+    \sumdata x_i z_i, & \sumdata y_i z_i, & \sumdata z_i z_i, & \sumdata z_i \\
+    \sumdata x_i,     & \sumdata y_i,     & \sumdata z_i,     & \sumdata 1
+  \end{bmatrix}
+  \begin{bmatrix}
+    A \\ B \\ C \\ D
+  \end{bmatrix}
+  = -
+  \begin{bmatrix}
+    \sumdata \left( x_i^2 + y_i^2 + z_i^2 \right) x_i \\
+    \sumdata \left( x_i^2 + y_i^2 + z_i^2 \right) y_i \\
+    \sumdata \left( x_i^2 + y_i^2 + z_i^2 \right) z_i \\
+    \sumdata \left( x_i^2 + y_i^2 + z_i^2 \right) 1
+  \end{bmatrix}
+\end{equation}
+
+後は、この連立方程式を解いて $A, B, C$ を決定し、
+式 (\ref{eq:lsm_ball_assign}) に代入して
+
+\begin{eqnarray}
+  a &=& - \frac{A}{2}, \\
+  b &=& - \frac{B}{2}, \\
+  c &=& - \frac{C}{2}, \\
+  r &=& \sqrt{a^2 + b^2 + c^2- D} = \frac{\sqrt{A^2 + B^2 + C^2 - 4D}}{2}
+\end{eqnarray}
+
+が得られる。
+
+\section{(応用) 疑似逆行列}
+
+行列 $A$ が正方行列であって、逆行列 $A^{-1}$ が存在する時、
+連立方程式 $A \vector{x} = \vector{b}$ は、
+$\vector{x} = A^{-1} \vector{b}$
+と解くことができる。
+
+ここでは $A$ が正方行列でない場合を考える。
+今回は、行の方が多いつまり $A$ が $m \times n$ 行列の時に
+$m > n$ である場合だけ考えよう。
+この場合、連立方程式で言うならば、変数の数 $n$ よりも
+式の数 $m$ の方が多いのだから、一般には解が存在しない。
+そこで、近似解を求めることで妥協する。
+
+まず、連立方程式の右辺を移項して、右辺をゼロに変形しておく。
+\begin{equation}
+  A \vector{x} - \vector{b} = \vector{0}
+\end{equation}
+このような $x$ は存在しないから、先ほどまでの最小二乗法と同じ考えで、
+誤差に相当する
+\begin{equation}
+  \| A \vector{x} - \vector{b} \| \label{eq:error_norm}
+\end{equation}
+が最小になるように $\vector{x}$ を求めることにする。
+
+$m \times n$ 行列 A に対して、以下の 4 条件を満たす $n \times m$ 行列
+$A^{+}$ がただ一つ定まる :
+\begin{eqnarray}
+  A A^{+} A = A, \\
+  A^{+} A A^{+} = A^{+} \\
+  (A A^{+})^{*} = A A^{+} \\
+  (A^{+} A)^{*} = A^{+} A
+\end{eqnarray}
+なお、$A^{*}$ は $A$ の
+随伴行列 (各要素の複素共役を取りさらに転置した行列) を表す。
+
+この行列 $A^{+}$ を $A$ の疑似逆行列と呼ぶ。
+$A$ が正則でなくても $A^{+}$ は定まる。
+$A$ が正則ならば $A$ の逆行列はこの性質を満たす (つまり $A^{+} = A^{-1}$) 。
+
+詳しくは省略するが $A$ の各列が一時独立であれば、
+$A^{*} A$ は可逆であり、
+\begin{equation}
+  A^{+} = \left( A^{*} A \right)^{-1} A^{*}
+\end{equation}
+が成り立つ。この時 存在しない $A^{-1}$ の代わりに $A^{+}$ を用いることで
+\begin{equation}
+  \vector{x} = A^{+} \vector{b}
+\end{equation}
+とすれば、この $\vector{x}$ は 式 (\ref{eq:error_norm}) を
+最小にするベクトルである。
 
 \end{document}
