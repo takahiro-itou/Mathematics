@@ -155,29 +155,32 @@ $a$ および $b$ についての偏微分がゼロであるから、
 
 モデル関数は
 \begin{equation}
-  f \left( x \right) = a_0 + a_1 x^1 + \cdots + a_{n-1} x^{n-1} + a_n x^n
+  \function{f}{x} = a_0 + a_1 x^1 + a_2 x_i^2
+  \cdots + a_{n-1} x^{n-1} + a_n x^n
 \end{equation}
 
 であるから、式 (\ref{eq:least_square}) は
 
 \begin{equation}
   \Delta = \frac{1}{2}
-  \sumdata \left( a_0 + a_1 x_i + + a_2 x_i^2
+  \sumdata \left( a_0 + a_1 x_i + a_2 x_i^2
   + \cdots + a_{n-1} x_i^{n-1} + a_n x_i^n - y_i \right) ^2
 \end{equation}
 となる。先ほどと同様に $a_0, a_a, \ldots, a_n$ で偏微分すると
 
-\begin{eqnarray*}
+\begin{eqnarray}
   \partd{}{a_0} \Delta &=& \sumdata \left(
-  a_0 + a_1 x_i + \cdots a_n x_i^n  - y_i  \right) 1, \nonumber \\
+  a_0 + a_1 x_i + a_2 x_i^2 + \cdots a_n x_i^n  - y_i  \right) 1, \nonumber \\
   \partd{}{a_1} \Delta &=& \sumdata \left(
-  a_0 + a_1 x_i + \cdots a_n x_i^n  - y_i  \right) x_i, \nonumber \\
+  a_0 + a_1 x_i + a_2 x_i^2 + \cdots a_n x_i^n  - y_i  \right) x_i, \nonumber \\
   \partd{}{a_2} \Delta &=& \sumdata \left(
-  a_0 + a_1 x_i + \cdots a_n x_i^n  - y_i  \right) x_i^2, \nonumber \\
-  \cdots \nonumber \\
+  a_0 + a_1 x_i + a_2 x_i^2 + \cdots a_n x_i^n  - y_i  \right)
+  x_i^2, \nonumber \\
+  \vdots \nonumber \\
   \partd{}{a_n} \Delta &=& \sumdata \left(
-  a_0 + a_1 x_i + \cdots a_n x_i^n  - y_i  \right) x_n^2, \nonumber \\
-\end{eqnarray*}
+  a_0 + a_1 x_i + a_2 x_i^2 + \cdots a_n x_i^n  - y_i  \right)
+  x_n^2
+\end{eqnarray}
 
 この各式がゼロとおいて、移項して行列の形に纏めると
 
@@ -206,7 +209,7 @@ $a$ および $b$ についての偏微分がゼロであるから、
   \end{bmatrix}
 \end{equation}
 
-後はこれに掃き出し法や LR 分解など、
+後はこれに掃き出し法や LU 分解など、
 連立一次方程式の解法アルゴリズムを適用すれば良い。
 
 \section{発展編}
@@ -385,7 +388,7 @@ $x_i, y_i$ は測定データで既知つまり定数であるから、
   \end{bmatrix}
 \end{equation}
 
-後は、この連立方程式を解いて $A, B, C$ を決定し、
+後は、この連立方程式を解いて $A, B, C, D$ を決定し、
 式 (\ref{eq:lsm_ball_assign}) に代入して
 
 \begin{eqnarray}
@@ -437,7 +440,7 @@ $A^{+}$ がただ一つ定まる :
 $A$ が正則でなくても $A^{+}$ は定まる。
 $A$ が正則ならば $A$ の逆行列はこの性質を満たす (つまり $A^{+} = A^{-1}$) 。
 
-詳しくは省略するが $A$ の各列が一時独立であれば、
+詳しくは省略するが $A$ の各列が線形独立であれば、
 $A^{*} A$ は可逆であり、
 \begin{equation}
   A^{+} = \left( A^{*} A \right)^{-1} A^{*}
