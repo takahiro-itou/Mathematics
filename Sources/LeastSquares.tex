@@ -90,8 +90,8 @@ $a$ および $b$ についての偏微分がゼロであるから、
 
 \begin{equation}
   \begin{bmatrix}
-    \sumdata x_i^2, \sumdata x_i \\
-    \sumdata x_i, \sumdata 1
+    \sumdata x_i^2, & \sumdata x_i \\
+    \sumdata x_i,   & \sumdata 1
   \end{bmatrix}
   \begin{bmatrix}
     a \\
@@ -118,8 +118,8 @@ $a$ および $b$ についての偏微分がゼロであるから、
   \end{bmatrix}
   &=&
   \begin{bmatrix}
-    \sumdata x_i^2, \sumdata x_i \\
-    \sumdata x_i, \sumdata 1
+    \sumdata x_i^2, & \sumdata x_i \\
+    \sumdata x_i,    & \sumdata 1
   \end{bmatrix} ^{-1}
   \begin{bmatrix}
     \sumdata x_i y_i \\
@@ -128,8 +128,8 @@ $a$ および $b$ についての偏微分がゼロであるから、
   &=&
   \frac{1}{Det}
   \begin{bmatrix}
-    \sumdata 1, - \sumdata x_i, \\
-    - \sumdata x_i, \sumdata x_i^2
+    \sumdata 1,     & - \sumdata x_i, \\
+    - \sumdata x_i, & \sumdata x_i^2
   \end{bmatrix}
   \begin{bmatrix}
     \sumdata x_i y_i \\
@@ -149,5 +149,63 @@ $a$ および $b$ についての偏微分がゼロであるから、
     \left( \sumdata x_i y_i \right) \left( \sumdata x_i \right)
   }{N \sumdata x_i^2 - \left( \sumdata x_i \right)^2}, \nonumber \\
 \end{eqnarray}
+
+\section{一般的な多項式の場合}
+
+モデル関数は
+\begin{equation}
+  f \left( x \right) = a_0 + a_1 x^1 + \cdots + a_{n-1} x^{n-1} + a_n x^n
+\end{equation}
+
+であるから、式 (\ref{eq:least_square}) は
+
+\begin{equation}
+  \Delta = \frac{1}{2}
+  \sumdata \left( a_0 + a_1 x_i + + a_2 x_i^2
+  + \cdots + a_{n-1} x_i^{n-1} + a_n x_i^n - y_i \right) ^2
+\end{equation}
+となる。先ほどと同様に $a_0, a_a, \ldots, a_n$ で偏微分すると
+
+\begin{eqnarray*}
+  \partd{}{a_0} \Delta &=& \sumdata \left(
+  a_0 + a_1 x_i + \cdots a_n x_i^n  - y_i  \right) 1, \nonumber \\
+  \partd{}{a_1} \Delta &=& \sumdata \left(
+  a_0 + a_1 x_i + \cdots a_n x_i^n  - y_i  \right) x_i, \nonumber \\
+  \partd{}{a_2} \Delta &=& \sumdata \left(
+  a_0 + a_1 x_i + \cdots a_n x_i^n  - y_i  \right) x_i^2, \nonumber \\
+  \cdots \nonumber \\
+  \partd{}{a_n} \Delta &=& \sumdata \left(
+  a_0 + a_1 x_i + \cdots a_n x_i^n  - y_i  \right) x_n^2, \nonumber \\
+\end{eqnarray*}
+
+この各式がゼロとおいて、移項して行列の形に纏めると
+
+\begin{equation}
+  \begin{bmatrix}
+    \sumdata x_i^0, & \sumdata x_i^1, & \sumdata x_i^2,
+    & \cdots, & \sumdata x_i^n \\
+    \sumdata x_i^1, & \sumdata x_i^2, & \sumdata x_i^3,
+    & \cdots, & \sumdata x_i^{n+1} \\
+    \sumdata x_i^2, & \sumdata x_i^3, & \sumdata x_i^4,
+    & \cdots, & \sumdata x_i^{n+2} \\
+    \vdots, & \vdots, & \vdots, & \ddots, & \vdots, \\
+    \sumdata x_i^n, & \sumdata x_i^{n+1} & \sumdata x_i^{n+2},
+    & \cdots, & \sumdata x_i^{2n}
+  \end{bmatrix}
+  \begin{bmatrix}
+    a_0 \\ a_1 \\ a_2 \\ \vdots \\ a_n
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \sumdata x_i^0 y_i \\
+    \sumdata x_i^1 y_i \\
+    \sumdata x_i^2 y_i \\
+    \vdots \\
+    \sumdata x_i^n y_i
+  \end{bmatrix}
+\end{equation}
+
+後はこれに掃き出し法や LR 分解など、
+連立一次方程式の解法アルゴリズムを適用すれば良い。
 
 \end{document}
