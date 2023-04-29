@@ -3,6 +3,7 @@
 *.aux
 *.dvi
 *.log
+*.toc
 
 .Work/
 
