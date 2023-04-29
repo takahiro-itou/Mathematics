@@ -1,9 +1,5 @@
 
 .hg/
-*.aux
-*.dvi
-*.log
-*.toc
 
 .Work/
 
